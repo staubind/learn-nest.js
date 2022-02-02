@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
@@ -8,7 +8,11 @@ export class TasksController {
     constructor(private tasksService: TasksService) {}
 
     // for now we will use local memory to focus on the core, not to get bogged down in db stuff
-    
+
+    @Get()
+    getAllTasks() {
+        return this.tasksService.getAllTasks();
+    }
 
     // helloWorld() {
     //     this.tasksService.dosomething();
