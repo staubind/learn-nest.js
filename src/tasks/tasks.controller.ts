@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './task.model';
 import { title } from 'process';
@@ -17,10 +17,19 @@ export class TasksController {
         return this.tasksService.getAllTasks();
     }
 
+    @Get('/:id') // it knows which get to run because we'll give this one some path params.
+    getTaskById(@Param('id') id: string): Task {
+        return this.tasksService.getTaskById(id);
+    }
+
+    @Delete('/:id')
+    deleteTaskById(@Param('id') id: string): string {
+        return this.tasksService.deleteTaskById(id);
+    }
     // option 0
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto): Task {
-        return this.tasksService.createTask(createTaskDto)
+        return this.tasksService.createTask(createTaskDto);
     }
 
     // option 1
@@ -45,7 +54,7 @@ export class TasksController {
     // helloWorld() {
     //     this.tasksService.dosomething();
     // }
-}
+
 
 // this works, too, but above has more sugar.
 // @Controller('tasks')
