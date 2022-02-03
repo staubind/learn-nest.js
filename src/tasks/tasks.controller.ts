@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-
+import { Task } from './task.model'
 @Controller('tasks')
 export class TasksController {
     // in typescript, when defining param names, you can prefix them with an accessor
