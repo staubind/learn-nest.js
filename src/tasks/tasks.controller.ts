@@ -1,6 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './task.model'
+import { Task } from './task.model';
+import { title } from 'process';
+
 @Controller('tasks')
 export class TasksController {
     // in typescript, when defining param names, you can prefix them with an accessor
@@ -13,6 +15,25 @@ export class TasksController {
     getAllTasks(): Task[] {
         return this.tasksService.getAllTasks();
     }
+
+    // option 1
+    @Post()
+    createTask(
+        @Body('title') title: string, // this style picks out the particular properties. the style below does not.
+        @Body('description') description: string,
+    ): Task { // the @Body param stuffs the request's body into a variable called body
+        // however, callers can add whatever they like to it, so validation will need to be done.
+        console.log('title',title)
+        console.log('description',description)
+        return this.tasksService.createTask(title, description)
+    }
+    // option 2
+    // @Post()
+    // createTask(@Body() body) { // the @Body param stuffs the request's body into a variable called body
+    //     // however, callers can add whatever they like to it, so validation will need to be done.
+    //     console.log('body', body)
+    // }
+
 
     // helloWorld() {
     //     this.tasksService.dosomething();

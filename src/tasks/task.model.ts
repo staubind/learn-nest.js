@@ -5,11 +5,12 @@ export interface Task {
     id: string;
     title: string;
     description: string;
-    status: // use enums to enforce limited set of options
+    status: TaskStatus// use enums to enforce limited set of options
 }
 
-enum TaskStatus {
-    OPEN = 'open',
+// this syntax seems really weird to me. why not use colons? as with interface?
+export enum TaskStatus {
+    OPEN = 'OPEN',
     IN_PROGRESS = 'IN_PROGRESS',
     DONE = 'DONE',
 }
