@@ -10,7 +10,7 @@ export class TasksController {
     // for now we will use local memory to focus on the core, not to get bogged down in db stuff
 
     @Get()
-    getAllTasks() {
+    getAllTasks(): Task[] {
         return this.tasksService.getAllTasks();
     }
 
