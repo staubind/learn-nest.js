@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -12,7 +13,12 @@ export class TasksController {
     // for now we will use local memory to focus on the core, not to get bogged down in db stuff
 
     @Get()
-    getAllTasks(): Task[] {
+    getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
+        // if any filters defined, call gettasks with filters
+        if (Object.keys(filterDto).length) {
+            return this.tasksService.getTasksWIthFilters(filterDto);
+        }
+        // otherwise just get all tasks
         return this.tasksService.getAllTasks();
     }
 
