@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task, TaskStatus } from './task.model';
+import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { Task } from './task.entity';
 
 @Controller('tasks')
 export class TasksController {
@@ -13,40 +14,46 @@ export class TasksController {
 
     // for now we will use local memory to focus on the core, not to get bogged down in db stuff
 
-    @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
-        // if any filters defined, call gettasks with filters
-        if (Object.keys(filterDto).length) {
-            return this.tasksService.getTasksWIthFilters(filterDto);
-        }
-        // otherwise just get all tasks
-        return this.tasksService.getAllTasks();
-    }
+    // @Get()
+    // getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
+    //     // if any filters defined, call gettasks with filters
+    //     if (Object.keys(filterDto).length) {
+    //         return this.tasksService.getTasksWIthFilters(filterDto);
+    //     }
+    //     // otherwise just get all tasks
+    //     return this.tasksService.getAllTasks();
+    // }
 
-    @Get('/:id') // it knows which get to run because we'll give this one some path params.
-    getTaskById(@Param('id') id: string): Task {
+    // @Get('/:id') // it knows which get to run because we'll give this one some path params.
+    // getTaskById(@Param('id') id: string): Task {
+    //     return this.tasksService.getTaskById(id);
+    // }
+
+    @Get('/:id')
+    getTaskById(@Param('id') id: string): Promise<Task> {
+        // return type is promise because this is async
         return this.tasksService.getTaskById(id);
     }
 
-    @Delete('/:id')
-    deleteTaskById(@Param('id') id: string): void {
-        return this.tasksService.deleteTaskById(id); // don't have to return anything w/ void
-    }
+    // @Delete('/:id')
+    // deleteTaskById(@Param('id') id: string): void {
+    //     return this.tasksService.deleteTaskById(id); // don't have to return anything w/ void
+    // }
 
-    @Patch('/:id/status')
-    updateTaskStatus(
-        @Param('id') id: string, 
-        @Body() updateTaskStatusDto: UpdateTaskStatusDto,
-    ): Task {
-        const { status } = updateTaskStatusDto;
-        return this.tasksService.updateTaskStatus(id, status);
-    }
+    // @Patch('/:id/status')
+    // updateTaskStatus(
+    //     @Param('id') id: string, 
+    //     @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    // ): Task {
+    //     const { status } = updateTaskStatusDto;
+    //     return this.tasksService.updateTaskStatus(id, status);
+    // }
 
-    // option 0
-    @Post()
-    createTask(@Body() createTaskDto: CreateTaskDto): Task {
-        return this.tasksService.createTask(createTaskDto);
-    }
+    // // option 0
+    // @Post()
+    // createTask(@Body() createTaskDto: CreateTaskDto): Task {
+    //     return this.tasksService.createTask(createTaskDto);
+    // }
 
     // option 1
     // @Post()

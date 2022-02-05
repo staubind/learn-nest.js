@@ -3,6 +3,6 @@ import { Task } from './task.entity';
 
 
 @EntityRepository(Task)
-export class TaskRepository extends Repository<Task> {
+export class TasksRepository extends Repository<Task> {
 
 }
