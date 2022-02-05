@@ -14,6 +14,11 @@ export class TasksController {
 
     // for now we will use local memory to focus on the core, not to get bogged down in db stuff
 
+    @Get()
+    getTasks(@Query() filterDto: GetTasksFilterDto): Promise<Task[]> {
+        return this.tasksService.getTasks(filterDto);
+    }
+
     // @Get()
     // getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
     //     // if any filters defined, call gettasks with filters
@@ -40,6 +45,23 @@ export class TasksController {
     //     return this.tasksService.deleteTaskById(id); // don't have to return anything w/ void
     // }
 
+    @Delete('/:id')
+    deleteTaskById(@Param('id') id: string): Promise<void> {
+        return this.tasksService.deleteTaskById(id);
+    }
+
+    @Patch('/:id/status')
+    updateTaskStatus(
+        @Param('id') id: string, 
+        @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+    ): Promise<Task> {
+        const result = this.tasksService.updateTaskStatus(
+            id, 
+            updateTaskStatusDto.status
+        );
+        return result;
+    }
+
     // @Patch('/:id/status')
     // updateTaskStatus(
     //     @Param('id') id: string, 
@@ -48,6 +70,11 @@ export class TasksController {
     //     const { status } = updateTaskStatusDto;
     //     return this.tasksService.updateTaskStatus(id, status);
     // }
+
+    @Post()
+    createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+        return this.tasksService.createTask(createTaskDto);
+    }
 
     // // option 0
     // @Post()
