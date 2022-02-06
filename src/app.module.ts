@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TasksModule } from './tasks/tasks.module';
 import {TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import {TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true, // loads entities from nest to use w/ db
       synchronize: true, // keeps db schema in sync - no manual migrations
     }),
+    AuthModule,
   ],
 })
 export class AppModule {}
